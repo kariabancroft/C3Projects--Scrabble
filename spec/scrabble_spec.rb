@@ -40,8 +40,23 @@ describe Scrabble::Scrabble do
     end
 
     it "returns the shorter word if there's a tie" do
-      array_of_words = ["letter", "letters", "pasta"] #=> [6,7,7] get "pasta"
-      expect(Scrabble::Scrabble.highest_score_from(array_of_words)).to eq("pasta")      
+      array_of_words = ["letter", "pasta", "koi"].shuffle #=> [6,7,7] get "koi"
+      expect(Scrabble::Scrabble.highest_score_from(array_of_words)).to eq("koi")      
+    end
+
+    it "prefers a 7-letter word in a tie" do
+      array_of_words = ["pasta", "letters", "koi"] #=> [7,7,7] get "letters"
+      expect(Scrabble::Scrabble.highest_score_from(array_of_words)).to eq("letters")      
+    end
+
+    it "picks the first word when length and score are the same" do
+      array_of_words = ["ice", "dig", "cat"] #=> [5,5,5] gets "ice"
+      expect(Scrabble::Scrabble.highest_score_from(array_of_words)).to eq("ice")      
+    end
+
+    it "picks the first word when length and score are the same, even when they're 7 letter words" do
+      array_of_words = ["letters", "lettere", "eeeeeee"] #=> [7,7,7,] gets "letters"
+      expect(Scrabble::Scrabble.highest_score_from(array_of_words)).to eq("letters")            
     end
   end
 end #describe
