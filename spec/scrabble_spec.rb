@@ -28,4 +28,20 @@ describe Scrabble::Scrabble do
       end
     end
   end # context
+
+  it "responds to the class method highest_score_from" do
+    expect(Scrabble::Scrabble).to respond_to :highest_score_from
+  end
+
+  context "when finding the highest scoring word" do
+    it "returns the highest scoring word from an array of words" do
+      array_of_words = ["no","yes"] #=> [2, 6] should return "yes"
+      expect(Scrabble::Scrabble.highest_score_from(array_of_words)).to eq("yes")    
+    end
+
+    it "returns the shorter word if there's a tie" do
+      array_of_words = ["letter", "letters", "pasta"] #=> [6,7,7] get "pasta"
+      expect(Scrabble::Scrabble.highest_score_from(array_of_words)).to eq("pasta")      
+    end
+  end
 end #describe

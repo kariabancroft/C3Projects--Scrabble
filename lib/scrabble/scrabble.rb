@@ -1,3 +1,5 @@
+require 'pry'
+
 module Scrabble
   LETTER_VALUES = { a: 1, b: 3, c: 3, d: 2, e: 1, f: 4,
     g: 2, h: 4, i: 1, j: 8, k: 5,
@@ -20,6 +22,19 @@ module Scrabble
 
       # Return the sum of all letters
       return points
+    end
+
+    def self.highest_score_from(array_of_words)
+      # score each word in the array
+      score_groups = array_of_words.group_by do |word|
+        score(word)
+      end
+
+      # figure out which score is the highest
+      highest_score = score_groups.keys.max
+      
+      # return that _word_ (not the score) :)
+      score_groups[highest_score].first
     end
   end
 end
